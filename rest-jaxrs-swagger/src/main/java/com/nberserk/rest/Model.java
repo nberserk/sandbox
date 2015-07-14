@@ -1,9 +1,16 @@
 package com.nberserk.rest;
 
-/**
- * Created by darren on 2015. 7. 13..
- */
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@ApiModel(description="Model")
+@XmlRootElement
 public class Model {
+
+    @XmlElement(name="id")
     String id;
     String desc;
 
@@ -11,6 +18,7 @@ public class Model {
         this.id = id;
     }
 
+    @ApiModelProperty(required = true, value = "id")
     public String getId() {
         return id;
     }
@@ -23,7 +31,13 @@ public class Model {
         this.desc = desc;
     }
 
+    @ApiModelProperty(value = "description")
     public String getDesc() {
         return desc;
+    }
+
+    @Override
+    public String toString() {
+        return "id: " + id + ", desc: " + desc;
     }
 }
