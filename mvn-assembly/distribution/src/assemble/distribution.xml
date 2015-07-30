@@ -1,0 +1,44 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+    <id>final-distribution</id>
+    <formats>
+        <format>dir</format>
+        <format>tar.gz</format>
+        <!-- format>zip</format -->
+    </formats>
+    <dependencySets>
+        <dependencySet>
+            <includes>
+            <include>com.nberserk:core</include>
+            </includes>
+        </dependencySet>
+        <dependencySet>
+            <outputDirectory>lib</outputDirectory>
+            <excludes>
+                <exclude>com.nberserk:core</exclude>
+            </excludes>
+            <useProjectArtifact>false</useProjectArtifact>
+            <!--<useTransitiveDependencies>false</useTransitiveDependencies>-->
+        </dependencySet>
+    </dependencySets>
+
+    <fileSets>
+        <fileSet>
+            <directory>../</directory>
+            <includes>
+                <include>readme.md</include>
+                <include>LICENSE*</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>../bin</directory>
+            <directoryMode>0755</directoryMode>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>../conf</directory>
+        </fileSet>
+    </fileSets>
+</assembly>
+
