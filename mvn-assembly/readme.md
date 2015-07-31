@@ -4,7 +4,7 @@ you can see
 - make distribution(zip, tar.gz) package using assembly plugins
 - mutilple module<core, distribution>
 
-[related blog post]()
+[related blog post](http://nberserk.github.io/2015/07/31/mvn-assembly.html)
 
 
 
