@@ -24,10 +24,10 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <finalName>${project.parent.artifactId}-${project.version}</finalName>
-                    <appendAssemblyId>false</appendAssemblyId>
-                    <attach>false</attach>
-                    <descriptor>src/assemble/distribution.xml</descriptor>
+                    <descriptors>
+                        <descriptor>src/assemble/distribution.xml</descriptor>
+                        <descriptor>src/assemble/distribution-src.xml</descriptor>
+                    </descriptors>
                 </configuration>
             </plugin>
         </plugins>

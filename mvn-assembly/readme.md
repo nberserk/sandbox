@@ -1,7 +1,10 @@
 ## Maven assembly plugin
 you can see
-- create manifest of jar file
-- make distribution package using assembly plugins
+- create MANIFEST.MF of jar file
+- make distribution(zip, tar.gz) package using assembly plugins
+- mutilple module<core, distribution>
+
+[related blog post]()
 
 
 
