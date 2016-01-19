@@ -31,6 +31,12 @@
           <version>${spring.version}</version>
       </dependency>
       <dependency>
+          <groupId>org.codehaus.jackson</groupId>
+          <artifactId>jackson-mapper-asl</artifactId>
+          <version>1.9.13</version>
+      </dependency>
+
+      <dependency>
           <groupId>junit</groupId>
           <artifactId>junit</artifactId>
           <version>3.8.1</version>
@@ -57,9 +63,9 @@
                 <version>9.2.11.v20150529</version>
                 <configuration>
                     <scanIntervalSeconds>10</scanIntervalSeconds>
-                    <webApp>
-                        <contextPath>/</contextPath>
-                    </webApp>
+                    <!--<webApp>-->
+                        <!--<contextPath>/</contextPath>-->
+                    <!--</webApp>-->
                 </configuration>
             </plugin>
 
