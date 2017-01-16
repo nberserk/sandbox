@@ -1,3 +1,5 @@
+import './rxjs-extensions';
+
 import { NgModule }      from '@angular/core';
 import {RouterModule} from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
@@ -13,8 +15,11 @@ import { HeroDetailComponent } from './hero-detail.component';
 import { HeroesComponent} from './heroes.component';
 import { HeroService} from './hero.service';
 import { DashboardComponent} from './dashboard.component';
+import { HeroSearchComponent} from './hero-search.component';
 
 import {AppRoutingModule} from './app-routing.module';
+
+
 
 @NgModule({
   imports:      [ 
@@ -30,6 +35,7 @@ import {AppRoutingModule} from './app-routing.module';
     HeroDetailComponent, 
     HeroesComponent,
     DashboardComponent,
+    HeroSearchComponent,
   ],
 
   providers: [
