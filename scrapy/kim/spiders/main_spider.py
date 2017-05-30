@@ -4,30 +4,33 @@ from scrapy import FormRequest
 from loginform import fill_login_form
 
 
-class QuotesSpider(scrapy.Spider):
-    name = "quotes"
-
-    login_url = "http://"
-
-    def start_requests(self):
-        yield scrapy.Request(self.login_url, self.parse_login)
-
-    def parse_login(self, response):
-        data, url, method = fill_login_form(response.url, response.body, "nberserk", "test")
-
-        return FormRequest(url, formdata=dict(data), method=method, callback=self.start_crawl)
-
-    def start_crawl(self, response):
-        urls = [
-            '/bbs/board.php?bo_table=conditions',
-        ]
-        for url in urls:
-            yield scrapy.Request(url=url, callback=self.parse)
+class KimSpider(scrapy.Spider):
+    name = "kim"
+    prefix = 'http://kimdongjo.com/'
+    start_urls = ['http://kimdongjo.com/bbs/login.php']
+    password_key = 'PASSWORD'
+    
+    def after_login(self, response):
+        if 'location.replace' in response.body:
+            #print 'raw: %s' % res
+            yield scrapy.Request(url='http://kimdongjo.com/bbs/board.php?bo_table=conditions', callback=self.parse_conditions)
+            
+    def parse_conditions(self, response):
+        print 'conditions: %s' % response.body
+        
+            
+            
+        # urls = [
+        #     '/bbs/board.php?bo_table=conditions',
+        # ]
+        # for url in urls:
+        #     yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
-        page = response.url.split("/")[-2]
-        filename = 'quotes-%s.html' % page
-        with open(filename, 'wb') as f:
-            f.write(response.body)
-        self.log('Saved file %s' % filename)
-
+        #print self.settings.attributes['PASSWORD']
+        print self.settings.get(self.password_key)
+        return FormRequest(self.prefix+'bbs/login_check.php',
+                           formdata={'mb_id': 'nberserk', 'mb_password': self.settings.get(self.password_key)}, method='POST',
+            callback=self.after_login
+        )
+        
