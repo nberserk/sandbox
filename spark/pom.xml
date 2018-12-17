@@ -1,16 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>hms</groupId>
-    <artifactId>analytics</artifactId>
+    <groupId>com.nberserk</groupId>
+    <artifactId>spark-sample</artifactId>
     <version>0.1</version>
     <name>${project.artifactId}</name>
-    <description>Example Scala Spark App - Maven build
-        This POM has two exec goals: -
-        exec:exec@run-local - Run the code in spark local mode.
-        exec:exec@run-yarn - Run the code on yarn cluster in client mode. For this to work core-site.xml and
-        yarn-site.xml
-        must exist in the main/resources directory and point to a valid cluster.
+    <description> spark example
     </description>
     <inceptionYear>2018</inceptionYear>
     <repositories>
@@ -18,6 +13,11 @@
             <id>artima</id>
             <name>Artima Maven Repository</name>
             <url>http://repo.artima.com/releases</url>
+        </repository>
+        <repository>
+            <id>sparkPkgRepo</id>
+            <name>spark package repository</name>
+            <url>http://dl.bintray.com/spark-packages/maven</url>
         </repository>
     </repositories>
     <properties>
@@ -82,10 +82,14 @@
             <version>3.0.5</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>MrPowers</groupId>
+            <artifactId>spark-fast-tests</artifactId>
+            <version>0.17.1-s_2.11</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
-        <sourceDirectory>src/main/scala</sourceDirectory>
-	<testSourceDirectory>src/test/scala</testSourceDirectory>
         <plugins>
             <plugin>
                 <!-- see http://davidb.github.com/scala-maven-plugin -->
@@ -124,19 +128,19 @@
                 <artifactId>scalatest-maven-plugin</artifactId>
                 <version>2.0.0</version>
                 <configuration>
-			<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-			<!--<suites>net.martinprobson.spark.SparkTest</suites>-->
-			<junitxml>.</junitxml>
-			<filereports>WDF TestSuite.txt</filereports>
-		</configuration>
-		<executions>
-			<execution>
-				<id>test</id>
-				<goals>
-					<goal>test</goal>
-				</goals>
-			</execution>
-		</executions>
+                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                    <!--<suites>net.martinprobson.spark.SparkTest</suites>-->
+                    <junitxml>.</junitxml>
+                    <filereports>WDF TestSuite.txt</filereports>
+                </configuration>
+            <executions>
+                <execution>
+                    <id>test</id>
+                    <goals>
+                        <goal>test</goal>
+                    </goals>
+                </execution>
+            </executions>
 	    </plugin>
 	    <!-- disable surefire -->
             <plugin>
@@ -173,26 +177,6 @@
                             </arguments>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>run-yarn</id>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <environmentVariables>
-                                <HADOOP_CONF_DIR>
-                                    ${basedir}/spark-remote/conf
-                                </HADOOP_CONF_DIR>
-                            </environmentVariables>
-                            <executable>spark-submit</executable>
-                            <arguments>
-                                <argument>--master</argument>
-                                <argument>yarn</argument>
-                                <argument>${project.build.directory}/${project.artifactId}-${project.version}.jar
-                                </argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
             <!-- Use the shade plugin to remove all the provided artifacts (such as spark itself) from the jar -->
@@ -213,12 +197,12 @@
                             </excludes>
                         </filter>
                     </filters>
-                    <transformers>
-                        <transformer
-                                implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                            <mainClass>net.martinprobson.spark.SparkTest</mainClass>
-                        </transformer>
-                    </transformers>
+                    <!--<transformers>-->
+                        <!--<transformer-->
+                                <!--implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
+                            <!--<mainClass>net.martinprobson.spark.SparkTest</mainClass>-->
+                        <!--</transformer>-->
+                    <!--</transformers>-->
                     <artifactSet>
                         <excludes>
                             <exclude>javax.servlet:*</exclude>
